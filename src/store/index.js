@@ -5,3 +5,4 @@ const pinia = createPinia()
 export default pinia
 
 export * from './modules/login'
+export * from './modules/main'

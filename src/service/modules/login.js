@@ -9,17 +9,21 @@ export function fetchAuthCode(params) {
   return Request.get({
     url: '/dbElvDrawAuth/authCode',
     showLoading: false,
+    isReject: true,
     params
   })
 }
 
 /**
  * @description: 获取图形二维码
- * @param {}
+ * @param {key}
  */
-export function getCaptcha() {
+export function getCaptcha(key) {
   return Request.get({
-    url: '/dbElvDrawAuth/captcha'
+    url: '/dbElvDrawAuth/captcha',
+    params: {
+      key
+    }
   })
 }
 
@@ -32,6 +36,7 @@ export function getCaptcha() {
 export function getSendSms(params) {
   return Request.get({
     url: '/dbElvDrawAuth/sendSms',
+    isReject: true,
     params
   })
 }

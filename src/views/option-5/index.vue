@@ -57,7 +57,7 @@
             <div class="fill-row">
               <img class="icon" src="@/assets/images/option-5/icon-yz.png" />
               <input type="text" class="fill-term"  v-model="loginData.captchaCode" placeholder="请输入图形验证码" maxlength="8" />
-              <img src="https://ts1.cn.mm.bing.net/th?id=OIP-C.fMFKWHgO2Irgt-e1LBL2UgHaC4&w=349&h=135&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2" class="graph-code" @click="changeGraphCode" alt="">
+              <img :src="loginStore.imageCode" class="graph-code" @click="changeGraphCode" alt="">
             </div>
             <div class="fill-row">
               <img class="icon" src="@/assets/images/option-5/icon-yz.png" />
@@ -363,8 +363,9 @@ import "vant/es/toast/style";
 import { reactive, ref, onMounted } from "vue";
 import { Toast, showSuccessToast, showFailToast, showToast } from "vant";
 import { areaList } from "@vant/area-data";
-import { useLogin } from "@/store";
+import { useLogin, useMain } from "@/store";
 import {phoneReg} from '@/assets/data/regular'
+import { sessionCache } from "@/utils";
 
 const data = reactive({
   signState: true,
@@ -499,7 +500,12 @@ const loginData = reactive({
   smsCode: ''
 })
 
+const mainStore = useMain()
+// 获取任务列表
+// mainStore.fetchUserJob()
+
 const loginStore = useLogin()
+
 onMounted(() => {
   if(!loginStore.token) {
     data.showLogin = true
@@ -517,7 +523,9 @@ function changeGraphCode() {
   loginStore.fetchGraphCode()
 }
 
+// 抽奖
 function gameBtn() {
+  mainStore.fetchDraw()
   setTimeout(function () {
     data.signState = false;
   }, 1000);
@@ -598,7 +606,8 @@ async function get_sms_code() {
       captchaCode: loginData.captchaCode,
       captchaKey: loginStore.captchaKey
     }
-    await loginStore.fetchSendSms(params)
+    try {
+      await loginStore.fetchSendSms(params)
     data.content = data.currentTime + '秒'
     let tt = setInterval(function () {
       if (currentTime >= 1) {
@@ -609,6 +618,12 @@ async function get_sms_code() {
         clearInterval(tt);
       }
     }, 1000);
+    } catch(err) {
+      console.log(err);
+      showToast(err.msg)
+      changeGraphCode()
+    }
+
   }
 }
 
@@ -619,8 +634,8 @@ async function handleLoginClick() {
   const params = {
     mobile: loginData.mobile,
     smsCode: loginData.smsCode,
-    state: '',
-    openid: ''
+    state: sessionCache.getCache('state'),
+    openid: sessionCache.getCache('openid')
   }
   await loginStore.fetchLogin(params)
   data.showLogin = false
@@ -718,7 +733,7 @@ function closeBtn() {
   top: 0;
   right: 0;
   bottom: 0;
-  z-index: 9;
+  z-index: 799;
 }
 .hdgz-btn {
   position: absolute;

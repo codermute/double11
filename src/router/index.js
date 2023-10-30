@@ -23,8 +23,9 @@ router.beforeEach(async (to, from) => {
 	const loginStore = useLogin()
 
 	if(!loginStore.token) {
-		await loginStore.getToken();
+    await loginStore.getToken();
 	}
+  console.log(111);
 });
 
 export default router
