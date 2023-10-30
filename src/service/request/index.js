@@ -70,8 +70,8 @@ class Request {
   }
 
   request(config) {
-    if (config.showLoading === false) {
-      this.showLoading = config.showLoading
+    if (config.showLoading !== DEAFULT_LOADING) {
+      this.showLoading = !!config.showLoading
     } else {
       this.showLoading = DEAFULT_LOADING
     }

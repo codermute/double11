@@ -120,25 +120,20 @@
           <div class="task-list">
             <div
               class="task-item"
-              :class="item.bg ? 'red' : ''"
-              v-for="item in data.taskList"
+              :class="item.jobFinishNum > 0 ? 'red' : ''"
+              v-for="item in mainStore.taskList"
+              :key="item.id"
             >
-              <img class="task-icon" :src="item.srcImg" />
+              <img class="task-icon" :src="item.jobIcon" />
               <div class="task-info">
                 <div class="task-name">
-                  {{ item.name }}<span>({{ item.num }}/1)</span>
+                  {{ item.jobName }}<span>({{ item.jobFinishNum > 0 ? 1: 0 }}/1)</span>
                 </div>
               </div>
               <a
-                href="#"
                 class="task-btn"
-                v-if="item.btnState == 1"
-                @click="signBtn"
-                >签到</a
-              >
-              <a href="#" class="task-btn" v-if="item.btnState == 2">去查看</a>
-              <a href="#" class="task-btn" v-if="item.btnState == 3"
-                >领取奖励</a
+                @click="handletaskClick(item.id)"
+                >{{item.jobBtn}}</a
               >
             </div>
           </div>
@@ -400,53 +395,11 @@ const data = reactive({
   taskList: [
     {
       id: 0,
-      srcImg: require("@/assets/images/option-5/task-icon1.png"),
-      name: "每日签到",
-      num: 0,
-      btnState: 1,
-    },
-    {
-      id: 0,
-      srcImg: require("@/assets/images/option-5/task-icon2.png"),
-      name: "每日签到",
-      num: 0,
-      btnState: 2,
-    },
-    {
-      id: 0,
-      srcImg: require("@/assets/images/option-5/task-icon3.png"),
-      name: "每日签到",
-      num: 0,
-      btnState: 2,
-    },
-    {
-      id: 0,
       srcImg: require("@/assets/images/option-5/task-icon7.png"),
       name: "参与门店活动领惊喜福利",
       num: 0,
       btnState: 3,
       bg: true,
-    },
-    {
-      id: 0,
-      srcImg: require("@/assets/images/option-5/task-icon4.png"),
-      name: "每日签到",
-      num: 0,
-      btnState: 2,
-    },
-    {
-      id: 0,
-      srcImg: require("@/assets/images/option-5/task-icon5.png"),
-      name: "每日签到",
-      num: 0,
-      btnState: 2,
-    },
-    {
-      id: 0,
-      srcImg: require("@/assets/images/option-5/task-icon6.png"),
-      name: "查看用户体验官",
-      num: 0,
-      btnState: 2,
     },
   ],
   prizeList: [
@@ -511,7 +464,7 @@ onMounted(() => {
     data.showLogin = true
     changeGraphCode()
   }
-
+  mainStore.fetchActivityShare()
   for (var i = 1; i < 21; i++) {
     var _val = '<span id="site_' + i + '"></span>';
     $(".game_content").append(_val);
@@ -524,8 +477,8 @@ function changeGraphCode() {
 }
 
 // 抽奖
-function gameBtn() {
-  mainStore.fetchDraw()
+async function gameBtn() {
+  // await mainStore.fetchDraw()
   setTimeout(function () {
     data.signState = false;
   }, 1000);
@@ -653,12 +606,15 @@ function libaoBtn() {
 
 //获取次数
 function taskBtn() {
+  mainStore.fetchUserJob()
   data.showTask = true;
 }
 
 //签到提示
-function signBtn() {
-  showSuccessToast("恭喜您，签到成功");
+function handletaskClick(id) {
+  mainStore.fetchDoJob(id)
+  // showSuccessToast("恭喜您，签到成功");
+
 }
 
 //我的奖品

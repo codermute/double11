@@ -6,7 +6,7 @@ import Request from '../request'
  */
 export function changeDraw() {
   return Request.get({
-    url: '/dbElvDraw/draw'
+    url: '/api/dbElvDraw/draw'
   })
 }
 
@@ -30,7 +30,7 @@ export function getUserJob() {
  */
 export function changeDoJob(jobId) {
   return Request.get({
-    url: '/dbElvDraw/userDoJob',
+    url: '/api/dbElvDraw/userDoJob',
     params: {
       jobId
     }
@@ -43,6 +43,6 @@ export function changeDoJob(jobId) {
  */
 export function changeActivityShare() {
   return Request.get({
-    url: '/dbElvDraw/share',
+    url: '/api/dbElvDraw/share',
   })
 }
