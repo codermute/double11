@@ -1,0 +1,15 @@
+.popup-bg {position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000;filter: alpha(opacity=80);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#7F000000,endColorstr=#7F000000);}
+.popup-info{position: fixed; top:50%;left:50%;width:80%; z-index: 1001;transform:translate(-50%,-55%);}
+.popup-info2{position: fixed; bottom:0; left: 0;width:100%; z-index: 1001;}
+.popup-info2 .popup-content {border-radius:.2rem .2rem 0 0;overflow: hidden;}
+.padding-sm {padding:.3rem;}
+.text-center {text-align: center;}
+.popup-content {position:relative;width:100%;  margin:auto;background:#fff;border-radius: .2rem;}
+.popup-title {font-size:.4rem;color:#333;text-align: center;padding-bottom:.3rem;color:#333;    font-weight:700;}
+.popup-text {color:#666;}
+.close-btn {position: absolute;bottom:-1.5rem;width: .8rem;height: .8rem;left:50%;margin-left:-.4rem;}
+.popup-info2 .close-btn {position: absolute; display: block; left:auto;right:.2rem; top: .3rem;  width: .8rem; height: .8rem; line-height:.4rem; text-align: center; color: #999; font-size: .8rem;}
+.popup-btn-row {display: flex;align-items: center;justify-content: center;margin:.4rem .2rem 0;}
+
+
+

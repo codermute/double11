@@ -1,0 +1,2 @@
+#imgBoxBlowupLens {position: relative;}
+#imgBoxBlowupLens:after {position: relative;display: block;top:-14PX;left:-16PX;width:150PX;height:150PX;background:url('@/assets/images/option-2/icon-fdj.png') no-repeat;background-size:100% 100%;content: "";z-index: 101;}

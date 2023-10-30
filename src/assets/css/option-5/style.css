@@ -1,0 +1,100 @@
+.game_wrap{position: absolute;left: 0;top: 5.3rem;width: 100%;z-index: 1;}
+.game_content{width:100%; height: 11rem; position: relative;}
+
+
+.shaizi{position: relative; width: 2rem;margin:auto;}
+.shaizi span{display: block; width: 2rem; height: 2.2rem; background: url(@/assets/images/option-5/shaizi.png) no-repeat; background-size: 600%; margin: 0 auto;}
+.shaizi span.yao{animation: heart-burst steps(5) 0.3s infinite both; -webkit-animation: heart-burst steps(5) 0.3s infinite both;}
+@keyframes heart-burst {
+  0% {
+    background-position: 0%;
+  }
+  100% {
+    background-position: 100%;
+  }
+}
+@-webkit-keyframes heart-burst {
+  0% {
+    background-position: 0%;
+  }
+  100% {
+    background-position: 100%;
+  }
+}
+
+@-webkit-keyframes heart-burst {
+  0% {
+    background-position: 0%;
+  }
+  100% {
+    background-position: 100%;
+  }
+}
+
+
+.game_content span {width: 1.2rem; height:1.2rem;}
+#site_1{position: absolute; left: 1.6rem; top: 9rem; }
+#site_2{position: absolute; left: 2.8rem; top: 9.6rem; }
+#site_3{position: absolute; left: 3.9rem; top: 9rem; }
+#site_4{position: absolute; left: 5rem; top: 8.3rem;}
+#site_5{position: absolute; left: 6.15rem; top: 9rem;}
+#site_6{position: absolute; left: 7.25rem; top: 8.3rem;}
+#site_7{position: absolute; left: 8.45rem;top: 7.5rem;}
+#site_8{position: absolute; left: 7.3rem;top: 6.9rem;}
+#site_9{position: absolute; left: 8.45rem;top: 6.2rem; }
+#site_10{position: absolute; left: 7.3rem;top: 5.6rem;}
+#site_11{position: absolute; left: 6.15rem; top: 4.9rem; }
+#site_12{position: absolute; left: 5rem;  top: 5.6rem;}
+#site_13{position: absolute; left: 3.9rem;  top: 4.9rem; }
+#site_14{position: absolute; left: 2.7rem; top: 4.3rem;}
+#site_15{position: absolute; left: 3.9rem; top: 3.5rem; }
+#site_16{position: absolute; left: 5rem; top: 2.9rem;}
+#site_17{position: absolute; left: 3.9rem; top: 2.3rem; }
+#site_18{position: absolute; left: 2.7rem;  top: 1.7rem;}
+#site_19{position: absolute; left: 1.65rem; top: 1rem; }
+#site_20{position: absolute; left: 2.85rem; top: .3rem;}
+
+/* 初始目标 */
+.pic_pag2{width:2rem; position: absolute; left: 0; top: 9.1rem; text-align: center;}
+.pic_pag2 img{position:absolute;left:0;bottom:.1rem;width: 100%;animation:xiong2 3s infinite;-webkit-animation:xiong2 3s infinite;}
+@keyframes xiong2
+{
+  1% {transform: translate(0px,0px) }
+  25% {transform:translate(0px,-10px) }
+  50% {transform:translate(0px,0px) }
+  75% {transform: translate(0px,-10px) }
+  100% {transform:translate(0px,0px) }
+}
+@-webkit-keyframes xiong2
+{
+  1% {transform: translate(0px,0px) }
+  25% {transform:translate(0px,-10px) }
+  50% {transform:translate(0px,0px) }
+  75% {transform: translate(0px,-10px) }
+  100% {transform:translate(0px,0px) }
+}
+
+
+
+/* 活动目标 */
+.pic_pag{display: block;width: 2rem;height:2rem;position: absolute;left: -0.5rem;top: -1.2rem;animation:xiong 3s infinite;-webkit-animation:xiong 3s infinite;}
+/* .pic_pag img{width: 2rem;height: 2rem;} */
+.pic_pag span{width: 2rem;height: 2rem;display: block;background:url('@/assets/images/option-5/photo.png');background-size:100% 100%}
+@keyframes xiong
+{
+  1% {transform: translate(0px,0px) }
+  25% {transform:translate(0px,-10px) }
+  50% {transform:translate(0px,0px) }
+  75% {transform: translate(0px,-10px) }
+  100% {transform:translate(0px,0px) }
+}
+@-webkit-keyframes xiong
+{
+  1% {transform: translate(0px,0px) }
+  25% {transform:translate(0px,-10px) }
+  50% {transform:translate(0px,0px) }
+  75% {transform: translate(0px,-10px) }
+  100% {transform:translate(0px,0px) }
+}
+
+
