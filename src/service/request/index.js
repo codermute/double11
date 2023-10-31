@@ -50,14 +50,14 @@ class Request {
         this.loading?.close()
         const data = DecryptData(res.data)
         // console.log(data, '+++++');
-        // loginStore.getToken()
+
         if (data?.code === 10125 || data?.code === 40053) {
-          setTimeout(() => {
+          // setTimeout(() => {
             sessionCache.deleteCache(TOKEN)
             loginStore.token = ''
             const state = sessionCache.getCache('state')
             // location.href = `${store.basePath}/campusBlindBoxLottery/index?state=${state}`
-          }, 100)
+          // }, 100)
         }
         return data
       },
