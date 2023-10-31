@@ -323,6 +323,7 @@
                 src="@/assets/images/option-5/icon-suc.png"
               />
               <img
+                v-else
                 class="ask-icon"
                 src="@/assets/images/option-5/icon-err.png"
               />
@@ -342,13 +343,19 @@
     <!-- 分享答题 -->
     <div class="popup" v-show="data.showShare">
       <div class="popup-bg"></div>
-      <div class="popup-info">
+      <div class="popup-info" ref="riddleRef">
         <div class="popup-tips">长按图片保存至手机相册</div>
-        <div class="popup-share">
+        <div class="popup-share" ref="riddleShareRef">
           <!-- <img class="ewm-img" src="@/assets/images/option-5/ewm-img.jpg" /> -->
           <qrcode-vue class="ewm-img" :value="mainStore.shareUrl"></qrcode-vue>
           <img src="@/assets/images/option-5/share-img.png" />
         </div>
+        <img
+          :src="riddleUrl"
+          alt="脑筋急转弯"
+          class="canvas"
+          :style="{ top: riddleHeight + 'px' }"
+        />
         <img
           src="@/assets/images/option-5/close-white.png"
           @click="closeBtn"
@@ -360,12 +367,18 @@
     <!-- 分享海报 -->
     <div class="popup" v-show="data.showShareHB">
       <div class="popup-bg"></div>
-      <div class="popup-info">
+      <div class="popup-info" ref="activeRef">
         <div class="popup-tips">长按图片保存至手机相册</div>
-        <div class="popup-share">
+        <div class="popup-share" ref="activeShareRef">
           <qrcode-vue class="ewm-img" :value="mainStore.shareUrl"></qrcode-vue>
           <img src="@/assets/images/option-5/share-img2.jpg" />
         </div>
+        <img
+          :src="activeUrl"
+          alt=""
+          class="canvas"
+          :style="{ top: activeHeight + 'px' }"
+        />
         <img
           src="@/assets/images/option-5/close-white.png"
           @click="closeBtn"
@@ -380,11 +393,13 @@
 import 'vant/es/toast/style'
 import { reactive, ref, onMounted, watch } from 'vue'
 import QrcodeVue from 'qrcode.vue'
-import { Toast, showSuccessToast, showFailToast, showToast } from 'vant'
+import { showSuccessToast, showFailToast, showToast } from 'vant'
 import { areaList } from '@vant/area-data'
 import { useLogin, useMain } from '@/store'
 import { phoneReg } from '@/assets/data/regular'
 import { sessionCache } from '@/utils'
+import html2canvas from 'html2canvas'
+import { nextTick } from 'vue'
 
 const data = reactive({
   signState: true,
@@ -483,6 +498,11 @@ const mainStore = useMain()
 
 const loginStore = useLogin()
 
+const riddleShareRef = ref(null)
+const activeShareRef = ref(null)
+
+const riddleUrl = ref('')
+const activeUrl = ref('')
 onMounted(() => {
   if (!loginStore.token) {
     data.showLogin = true
@@ -698,16 +718,58 @@ function askBtn(item, index) {
   }
 }
 
+const activeHeight = ref(0)
+const riddleHeight = ref(0)
+
+const activeRef = ref(null)
+const riddleRef = ref(null)
+
 //分享答题
-function shareBtn() {
+async function shareBtn() {
   data.showShare = true
   data.showPrizeAsk = false
+
+  await nextTick()
+  const riddleImgHeight = riddleShareRef.value.offsetHeight
+  const riddleHeight = riddleRef.value.offsetHeight
+  riddleHeight.value = riddleHeight - riddleImgHeight
+
+  const riddleImgWidth = riddleShareRef.value.offsetWidth
+  html2canvas(riddleShareRef.value, {
+    useCORS: true,
+    allowTaint: true,
+    scale: 2,
+    width: riddleImgWidth
+    // height: riddleImgHeight
+  }).then((canvas) => {
+    console.log(canvas, '分享答题')
+    const datarepURL = canvas.toDataURL('image/png')
+    riddleUrl.value = datarepURL
+  })
 }
 
 //分享海报
-function shareHBBtn() {
+async function shareHBBtn() {
   data.showShareHB = true
   data.showPrize = false
+
+  await nextTick()
+  const activeImgHeight = activeShareRef.value.offsetHeight
+  const activeHeight = activeRef.value.offsetHeight
+  activeHeight.value = activeHeight - activeImgHeight
+
+  const activeImgWidth = activeShareRef.value.offsetWidth
+  html2canvas(activeShareRef.value, {
+    useCORS: true,
+    allowTaint: true,
+    scale: 2,
+    width: activeImgWidth
+    // height: activeImgHeight
+  }).then((canvas) => {
+    console.log(canvas, '分享海报')
+    const datarepURL = canvas.toDataURL('image/png')
+    activeUrl.value = datarepURL
+  })
 }
 
 //关闭
@@ -1026,5 +1088,13 @@ function closeBtn() {
   height: 1.7rem;
   left: 1.15rem;
   bottom: 0.55rem;
+}
+.canvas {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  z-index: 99;
 }
 </style>
