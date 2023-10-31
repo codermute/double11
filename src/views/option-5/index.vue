@@ -19,7 +19,7 @@
         @click="gameBtn"
         src="@/assets/images/option-5/game-btn.gif"
       />
-      <p class="cishu-text">剩余次数：<span>0</span></p>
+      <p class="cishu-text">剩余次数：<span>{{ mainStore.canDrawNum }}</span></p>
 
       <div class="cishu-btn">
         <img @click="taskBtn" src="@/assets/images/option-5/cishu-img.png" />
@@ -156,10 +156,10 @@
         </div>
         <div class="popup-content">
           <div class="task-list">
-            <div class="task-item" v-for="item in data.prizeList">
-              <img class="task-icon" :src="item.srcImg" />
+            <div class="task-item" v-for="item in mainStore.prizeList" :key="item.id">
+              <img class="task-icon" :src="item.prizeIcon" />
               <div class="task-info">
-                <div class="task-name">{{ item.name }}</div>
+                <div class="task-name">{{ item.prizeName }}</div>
               </div>
               <a href="#" class="task-btn" v-if="item.btnState">去使用</a>
               <a href="#" class="task-btn" v-else @click="goodsBtn">去领取</a>
@@ -457,6 +457,8 @@ const mainStore = useMain()
 // 获取任务列表
 // mainStore.fetchUserJob()
 
+mainStore.fetchCanDrawNum()
+
 const loginStore = useLogin()
 
 onMounted(() => {
@@ -601,6 +603,7 @@ function hdgzBtn() {
 
 //双11惊喜礼包
 function libaoBtn() {
+  mainStore.fetchluck1111()
   data.showLibao = true;
 }
 
@@ -618,7 +621,8 @@ function handletaskClick(id) {
 }
 
 //我的奖品
-function prizeBtn() {
+async function prizeBtn() {
+  await mainStore.fetchMyPrize()
   data.showMyPrize = true;
 }
 

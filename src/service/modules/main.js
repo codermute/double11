@@ -46,3 +46,33 @@ export function changeActivityShare() {
     url: '/api/dbElvDraw/share',
   })
 }
+
+/**
+ * @description: 我的奖品
+ * @param {}
+ */
+export function getMyPrize() {
+  return Request.get({
+    url: '/api/dbElvDraw/myPrize',
+  })
+}
+
+/**
+ * @description: 获取可抽奖次数
+ * @param {}
+ */
+export function getCanDrawNum() {
+  return Request.get({
+    url: '/api/dbElvDraw/getCanDrawNum',
+  })
+}
+
+/**
+ * @description: 幸运1111
+ * @param {}
+ */
+export function changeluck1111() {
+  return Request.get({
+    url: '/api/dbElvDraw/luck1111',
+  })
+}
