@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import {showToast} from 'vant'
-import {changeDraw,getUserJob, changeDoJob, changeActivityShare, getMyPrize, getCanDrawNum,changeluck1111, changeReceive} from '@/service'
+import {changeDraw,getUserJob, changeDoJob, changeActivityShare, getMyPrize, getCanDrawNum,changeluck1111, changeReceive, getReg} from '@/service'
 
 export const useMain = defineStore('main', {
   state: () => ({
@@ -8,7 +8,8 @@ export const useMain = defineStore('main', {
     shareUrl: '', // 分享链接
     prizeList: [], // 奖品列表
     canDrawNum: 0, // 抽奖次数
-    prizeDesc: ''
+    prizeDesc: '',
+    reg: {} // 收货信息
   }),
   actions: {
     async fetchDraw() {
@@ -27,7 +28,8 @@ export const useMain = defineStore('main', {
       this.taskList = res.list
     },
     async fetchDoJob(id) {
-      const res = await changeDoJob(id)
+      try {
+        const res = await changeDoJob(id)
       console.log(res, '做任务');
       this.fetchCanDrawNum()
 
@@ -37,6 +39,13 @@ export const useMain = defineStore('main', {
         showToast(res.msg)
       }
       this.fetchUserJob()
+      } catch (err) {
+        console.log(err);
+        if (err.url) {
+          location.href = err.url
+        }
+      }
+
     },
     async fetchActivityShare() {
       const res = await changeActivityShare()
@@ -60,7 +69,14 @@ export const useMain = defineStore('main', {
       this.canDrawNum = res?.canDrawNum || 0
     },
     async fetchReceive(payload) {
-      await changeReceive(payload)
+      const res = await changeReceive(payload)
+      console.log(res, '实物');
+      showToast('登记成功')
+    },
+    async fetchReg(id) {
+      const res = await getReg(id)
+      console.log(res, '收货信息');
+      this.reg = res.reg || {}
     }
   }
 })

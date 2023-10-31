@@ -187,8 +187,20 @@
               <div class="task-info">
                 <div class="task-name">{{ item.prizeName }}</div>
               </div>
-              <a href="#" class="task-btn" v-if="item.btnState">去使用</a>
-              <a href="#" class="task-btn" v-else @click="goodsBtn">去领取</a>
+              <a
+                class="task-btn"
+                v-if="item.prizeType === 4"
+                @click="goodsBtn(item)"
+                >去领取</a
+              >
+              <a :href="item.goUrl" class="task-btn" v-if="item.prizeType === 1"
+                >去领取</a
+              >
+              <a
+                class="task-btn"
+                v-if="item.prizeType === 5 || item.prizeType === 6"
+                >已发放</a
+              >
             </div>
           </div>
         </div>
@@ -415,6 +427,7 @@ import html2canvas from 'html2canvas'
 import { nextTick } from 'vue'
 
 const data = reactive({
+  prizeInfo: {},
   signState: true,
   currentIndex: null,
   quan: [2, 4, 8, 13, 17], //券
@@ -508,7 +521,6 @@ const loginData = reactive({
 const mainStore = useMain()
 // 获取任务列表
 // mainStore.fetchUserJob()
-
 const loginStore = useLogin()
 
 const riddleShareRef = ref(null)
@@ -697,7 +709,7 @@ async function signClick() {
   const { regMobile, regName, regAddress } = signData
   const [regProvince, regCity, regArea] = data.addressValue.split('-')
   const params = {
-    orderId: '',
+    orderId: data.prizeInfo?.id,
     regMobile,
     regName,
     regAddress,
@@ -706,7 +718,7 @@ async function signClick() {
     regArea
   }
   console.log(params)
-  // await mainStore.fetchReceive(params)
+  await mainStore.fetchReceive(params)
   data.showGoods = false
 }
 
@@ -740,7 +752,20 @@ async function prizeBtn() {
 }
 
 //实物登记
-function goodsBtn() {
+async function goodsBtn(item) {
+  if (item) {
+    await mainStore.fetchReg(item.id)
+    const { regMobile, regName, regAddress, regProvince, regCity, regArea } =
+      mainStore.reg
+    signData.regMobile = regMobile
+    signData.regName = regName
+    signData.regAddress = regAddress
+    data.addressValue = `${
+      regProvince ? regProvince + '-' + regCity + '-' + regArea : ''
+    }`
+
+    data.prizeInfo = item
+  }
   data.showGoods = true
   data.showMyPrize = false
 }

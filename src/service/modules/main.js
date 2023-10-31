@@ -32,6 +32,7 @@ export function getUserJob() {
 export function changeDoJob(jobId) {
   return Request.get({
     url: '/api/dbElvDraw/userDoJob',
+    isReject: true,
     params: {
       jobId
     }
@@ -93,5 +94,19 @@ export function changeReceive(params) {
   return Request.get({
     url: '/api/dbElvDraw/inKindReg',
     params
+  })
+}
+
+/**
+ * @description: 获取收货信息
+ * @param {orderId}
+ */
+export function getReg(orderId) {
+  return Request.get({
+    url: '/api/dbElvDraw/getReg',
+    showLoading: true,
+    params: {
+      orderId
+    }
   })
 }
