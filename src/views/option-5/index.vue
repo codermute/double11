@@ -1,6 +1,10 @@
 <template>
   <div class="page">
-    <div v-if="!loginStore.token" @click="data.showLogin = true" class="cover"></div>
+    <div
+      v-if="!loginStore.token"
+      @click="data.showLogin = true"
+      class="cover"
+    ></div>
     <div class="hdgz-btn" @click="hdgzBtn">活<br />动<br />规<br />则</div>
     <div class="libao-btn" @click="libaoBtn">
       <img src="@/assets/images/option-5/lb-img.png" />
@@ -19,7 +23,9 @@
         @click="gameBtn"
         src="@/assets/images/option-5/game-btn.gif"
       />
-      <p class="cishu-text">剩余次数：<span>{{ mainStore.canDrawNum }}</span></p>
+      <p class="cishu-text">
+        剩余次数：<span>{{ mainStore.canDrawNum }}</span>
+      </p>
 
       <div class="cishu-btn">
         <img @click="taskBtn" src="@/assets/images/option-5/cishu-img.png" />
@@ -56,12 +62,29 @@
             </div>
             <div class="fill-row">
               <img class="icon" src="@/assets/images/option-5/icon-yz.png" />
-              <input type="text" class="fill-term"  v-model="loginData.captchaCode" placeholder="请输入图形验证码" maxlength="8" />
-              <img :src="loginStore.imageCode" class="graph-code" @click="changeGraphCode" alt="">
+              <input
+                type="text"
+                class="fill-term"
+                v-model="loginData.captchaCode"
+                placeholder="请输入图形验证码"
+                maxlength="8"
+              />
+              <img
+                :src="loginStore.imageCode"
+                class="graph-code"
+                @click="changeGraphCode"
+                alt=""
+              />
             </div>
             <div class="fill-row">
               <img class="icon" src="@/assets/images/option-5/icon-yz.png" />
-              <input type="text" class="fill-term" v-model="loginData.smsCode" placeholder="请输入验证码" maxlength="6" />
+              <input
+                type="text"
+                class="fill-term"
+                v-model="loginData.smsCode"
+                placeholder="请输入验证码"
+                maxlength="6"
+              />
               <div class="btn-yz" @click="get_sms_code">{{ data.content }}</div>
             </div>
             <div class="fill-tips">
@@ -127,14 +150,13 @@
               <img class="task-icon" :src="item.jobIcon" />
               <div class="task-info">
                 <div class="task-name">
-                  {{ item.jobName }}<span>({{ item.jobFinishNum > 0 ? 1: 0 }}/1)</span>
+                  {{ item.jobName
+                  }}<span>({{ item.jobFinishNum > 0 ? 1 : 0 }}/1)</span>
                 </div>
               </div>
-              <a
-                class="task-btn"
-                @click="handletaskClick(item.id)"
-                >{{item.jobBtn}}</a
-              >
+              <a class="task-btn" @click="handletaskClick(item.id)">{{
+                item.jobBtn
+              }}</a>
             </div>
           </div>
         </div>
@@ -156,7 +178,11 @@
         </div>
         <div class="popup-content">
           <div class="task-list">
-            <div class="task-item" v-for="item in mainStore.prizeList" :key="item.id">
+            <div
+              class="task-item"
+              v-for="item in mainStore.prizeList"
+              :key="item.id"
+            >
               <img class="task-icon" :src="item.prizeIcon" />
               <div class="task-info">
                 <div class="task-name">{{ item.prizeName }}</div>
@@ -262,10 +288,8 @@
         <div class="popup-content">
           <img class="popup-icon" :src="data.prizeImg" />
           <div class="popup-text text-center">{{ data.prizeName }}</div>
-          <a href="#" class="popup-bottom-btn">确定</a>
-          <a href="#" class="popup-bottom-btn share-btn" @click="shareHBBtn"
-            >分享</a
-          >
+          <a @click="data.showPrize = false" class="popup-bottom-btn">确定</a>
+          <a class="popup-bottom-btn share-btn" @click="shareHBBtn">分享</a>
         </div>
         <img
           src="@/assets/images/option-5/close-white.png"
@@ -284,30 +308,28 @@
           <img src="@/assets/images/option-5/title-bg1.png" />
         </div>
         <div class="popup-content">
-          <div class="ask-title">什么动物最没有方向感？</div>
+          <div class="ask-title">{{ riddleInfo.gameTitle }}</div>
           <div class="ask-list">
             <div
               class="ask-item"
               @click="askBtn(item, index)"
               :class="data.currentIndex == index ? 'active' : ''"
-              v-for="(item, index) in data.askList"
+              v-for="(item, index) in riddleInfo.answerArr"
+              :key="item"
             >
               <img
                 class="ask-icon"
-                v-if="item.state"
+                v-if="Number(riddleInfo.correctAnswer) === index"
                 src="@/assets/images/option-5/icon-suc.png"
               />
               <img
                 class="ask-icon"
-                v-if="!item.state"
                 src="@/assets/images/option-5/icon-err.png"
               />
-              {{ item.text }}
+              {{ item }}
             </div>
           </div>
-          <a href="#" class="popup-bottom-btn share-btn" @click="shareBtn"
-            >分享</a
-          >
+          <a class="popup-bottom-btn share-btn" @click="shareBtn">分享</a>
         </div>
         <img
           src="@/assets/images/option-5/close-white.png"
@@ -323,7 +345,8 @@
       <div class="popup-info">
         <div class="popup-tips">长按图片保存至手机相册</div>
         <div class="popup-share">
-          <img class="ewm-img" src="@/assets/images/option-5/ewm-img.jpg" />
+          <!-- <img class="ewm-img" src="@/assets/images/option-5/ewm-img.jpg" /> -->
+          <qrcode-vue class="ewm-img" :value="mainStore.shareUrl"></qrcode-vue>
           <img src="@/assets/images/option-5/share-img.png" />
         </div>
         <img
@@ -340,7 +363,7 @@
       <div class="popup-info">
         <div class="popup-tips">长按图片保存至手机相册</div>
         <div class="popup-share">
-          <img class="ewm-img" src="@/assets/images/option-5/ewm-img.jpg" />
+          <qrcode-vue class="ewm-img" :value="mainStore.shareUrl"></qrcode-vue>
           <img src="@/assets/images/option-5/share-img2.jpg" />
         </div>
         <img
@@ -354,13 +377,14 @@
 </template>
 
 <script setup>
-import "vant/es/toast/style";
-import { reactive, ref, onMounted } from "vue";
-import { Toast, showSuccessToast, showFailToast, showToast } from "vant";
-import { areaList } from "@vant/area-data";
-import { useLogin, useMain } from "@/store";
-import {phoneReg} from '@/assets/data/regular'
-import { sessionCache } from "@/utils";
+import 'vant/es/toast/style'
+import { reactive, ref, onMounted, watch } from 'vue'
+import QrcodeVue from 'qrcode.vue'
+import { Toast, showSuccessToast, showFailToast, showToast } from 'vant'
+import { areaList } from '@vant/area-data'
+import { useLogin, useMain } from '@/store'
+import { phoneReg } from '@/assets/data/regular'
+import { sessionCache } from '@/utils'
 
 const data = reactive({
   signState: true,
@@ -376,10 +400,10 @@ const data = reactive({
 
   showPrize: false,
   showPrizeAsk: false,
-  prizeImg: require("@/assets/images/option-5/prize-img1.png"),
-  prizeName: "恭喜你获得10元副卡抵用券",
+  prizeImg: require('@/assets/images/option-5/prize-img1.png'),
+  prizeName: '恭喜你获得10元副卡抵用券',
 
-  content: "获取验证码",
+  content: '获取验证码',
   currentTime: 60,
   showLogin: false, //登录弹窗
   showHdgz: false, //登录活动规则
@@ -387,65 +411,65 @@ const data = reactive({
   showMyPrize: false, //我的奖品
   showGoods: false, //实物登记填写地址
   showAddress: false, //选择地址
-  addressValue: "",
-  defValue: "430002",
+  addressValue: '',
+  defValue: '430002',
   showLibao: false, //双11惊喜好礼
   showShare: false, //分享答题
   showShareHB: false, //分享海报
   taskList: [
     {
       id: 0,
-      srcImg: require("@/assets/images/option-5/task-icon7.png"),
-      name: "参与门店活动领惊喜福利",
+      srcImg: require('@/assets/images/option-5/task-icon7.png'),
+      name: '参与门店活动领惊喜福利',
       num: 0,
       btnState: 3,
-      bg: true,
-    },
+      bg: true
+    }
   ],
   prizeList: [
     {
       id: 0,
-      srcImg: require("@/assets/images/option-5/task-icon1.png"),
-      name: "10元副卡抵用券",
-      btnState: true,
+      srcImg: require('@/assets/images/option-5/task-icon1.png'),
+      name: '10元副卡抵用券',
+      btnState: true
     },
     {
       id: 0,
-      srcImg: require("@/assets/images/option-5/task-icon2.png"),
-      name: "10元副卡抵用券",
-      btnState: true,
+      srcImg: require('@/assets/images/option-5/task-icon2.png'),
+      name: '10元副卡抵用券',
+      btnState: true
     },
     {
       id: 0,
-      srcImg: require("@/assets/images/option-5/task-icon3.png"),
-      name: "10元副卡抵用券",
-      btnState: true,
+      srcImg: require('@/assets/images/option-5/task-icon3.png'),
+      name: '10元副卡抵用券',
+      btnState: true
     },
     {
       id: 0,
-      srcImg: require("@/assets/images/option-5/task-icon4.png"),
-      name: "实物礼品",
-      btnState: false,
-    },
+      srcImg: require('@/assets/images/option-5/task-icon4.png'),
+      name: '实物礼品',
+      btnState: false
+    }
   ],
   askList: [
     {
       id: 0,
-      text: "A.狮子",
-      state: false,
+      text: 'A.狮子',
+      state: false
     },
     {
       id: 0,
-      text: "B.斑马",
-      state: false,
+      text: 'B.斑马',
+      state: false
     },
     {
       id: 0,
-      text: "C.麋鹿",
-      state: true,
-    },
-  ],
-});
+      text: 'C.麋鹿',
+      state: true
+    }
+  ]
+})
 
 const loginData = reactive({
   mobile: '',
@@ -457,21 +481,32 @@ const mainStore = useMain()
 // 获取任务列表
 // mainStore.fetchUserJob()
 
-mainStore.fetchCanDrawNum()
-
 const loginStore = useLogin()
 
 onMounted(() => {
-  if(!loginStore.token) {
+  if (!loginStore.token) {
     data.showLogin = true
     changeGraphCode()
   }
-  mainStore.fetchActivityShare()
+
   for (var i = 1; i < 21; i++) {
-    var _val = '<span id="site_' + i + '"></span>';
-    $(".game_content").append(_val);
+    var _val = '<span id="site_' + i + '"></span>'
+    $('.game_content').append(_val)
   }
-});
+})
+
+watch(
+  () => loginStore.token,
+  (newToken) => {
+    if (newToken) {
+      // 获取分享链接
+      mainStore.fetchActivityShare()
+      // 获取抽奖次数
+      mainStore.fetchCanDrawNum()
+    }
+  },
+  { immediate: true }
+)
 
 /* 获取图形验证码 */
 function changeGraphCode() {
@@ -479,82 +514,94 @@ function changeGraphCode() {
 }
 
 // 抽奖
+const riddleInfo = ref({})
 async function gameBtn() {
-  // await mainStore.fetchDraw()
-  setTimeout(function () {
-    data.signState = false;
-  }, 1000);
-  $(".shaizi span").addClass("yao");
-  var the_num = Math.floor(Math.random() * 6 + 1);
-  var the_val = '<em class="pic_pag"><span></span></em>';
-  //console.log(the_num);
-  setTimeout(function () {
-    $(".shaizi span").removeClass("yao");
-    if (the_num != 0) {
-      $(".shaizi span").css("background-position", -2 * (the_num - 1) + "rem");
-    }
-    data.num += the_num;
-    console.log(data.num);
-    setTimeout(function () {
-      if (data.quan.indexOf(data.num) != -1) {
-        //券
-        data.showPrize = true;
-        (data.prizeImg = require("@/assets/images/option-5/prize-img1.png")),
-          (data.prizeName = "恭喜你获得**元副卡抵用券");
-      } else if (data.hongbao.indexOf(data.num) != -1) {
-        //红包
-        data.showPrize = true;
-        (data.prizeImg = require("@/assets/images/option-5/prize-img2.png")),
-          (data.prizeName = "恭喜你获得**元红包券");
-      } else if (data.erji.indexOf(data.num) != -1) {
-        //耳机
-        data.showPrize = true;
-        (data.prizeImg = require("@/assets/images/option-5/prize-img3.png")),
-          (data.prizeName = "恭喜你获得蓝牙机");
-      } else if (data.ask.indexOf(data.num) != -1) {
-        //问题
-        data.showPrizeAsk = true;
-      } else if (data.shaizi.indexOf(data.num) != -1) {
-        //骰子
-        data.showPrize = true;
-        (data.prizeImg = require("@/assets/images/option-5/prize-img5.png")),
-          (data.prizeName = "恭喜你获得1次掷骰次数");
-      } else if (data.luyouqi.indexOf(data.num) != -1) {
-        //路由器
-        data.showPrize = true;
-        (data.prizeImg = require("@/assets/images/option-5/prize-img6.png")),
-          (data.prizeName = "恭喜你获得路由器");
-      } else if (data.libao.indexOf(data.num) != -1) {
-        //礼包
-        data.showPrize = true;
-        (data.prizeImg = require("@/assets/images/option-5/prize-img7.png")),
-          (data.prizeName = "恭喜你获得终级大礼包");
-      } else {
-      }
-    }, 600);
-    if (data.num < 20) {
-      $(".pic_pag").remove();
-      $("#site_" + data.num).append(the_val);
-    } else if (data.num >= 20) {
-      $(".pic_pag").remove();
-      $("#site_20").append(the_val);
-      data.showPrize = true;
-      (data.prizeImg = require("@/assets/images/option-5/prize-img7.png")),
-        (data.prizeName = "恭喜你获得终级大礼包");
-    } /* else if(data.num>20){
-				data.num =data.num%20;
-				$(".pic_pag").remove();
-				$("#site_"+data.num).append(the_val);
-			}	 */
-  }, 1000);
+  const res = await mainStore.fetchDraw()
+
+  console.log('-----', res)
+  if (!res.game) {
+    data.prizeName = `恭喜您获得${res.prize?.prizeName}`
+    data.prizeImg = res.prize?.prizeIcon
+    data.showPrize = true
+  } else {
+    riddleInfo.value = res.game
+    data.showPrizeAsk = true
+  }
+
+  // setTimeout(function () {
+  //   data.signState = false
+  // }, 1000)
+  // $('.shaizi span').addClass('yao')
+  // var the_num = Math.floor(Math.random() * 6 + 1)
+  // var the_val = '<em class="pic_pag"><span></span></em>'
+  // //console.log(the_num);
+  // setTimeout(function () {
+  //   $('.shaizi span').removeClass('yao')
+  //   if (the_num != 0) {
+  //     $('.shaizi span').css('background-position', -2 * (the_num - 1) + 'rem')
+  //   }
+  //   data.num += the_num
+  //   console.log(data.num)
+  //   setTimeout(function () {
+  //     if (data.quan.indexOf(data.num) != -1) {
+  //       //券
+  //       data.showPrize = true
+  //       ;(data.prizeImg = require('@/assets/images/option-5/prize-img1.png')),
+  //         (data.prizeName = '恭喜你获得**元副卡抵用券')
+  //     } else if (data.hongbao.indexOf(data.num) != -1) {
+  //       //红包
+  //       data.showPrize = true
+  //       ;(data.prizeImg = require('@/assets/images/option-5/prize-img2.png')),
+  //         (data.prizeName = '恭喜你获得**元红包券')
+  //     } else if (data.erji.indexOf(data.num) != -1) {
+  //       //耳机
+  //       data.showPrize = true
+  //       ;(data.prizeImg = require('@/assets/images/option-5/prize-img3.png')),
+  //         (data.prizeName = '恭喜你获得蓝牙机')
+  //     } else if (data.ask.indexOf(data.num) != -1) {
+  //       //问题
+  //       data.showPrizeAsk = true
+  //     } else if (data.shaizi.indexOf(data.num) != -1) {
+  //       //骰子
+  //       data.showPrize = true
+  //       ;(data.prizeImg = require('@/assets/images/option-5/prize-img5.png')),
+  //         (data.prizeName = '恭喜你获得1次掷骰次数')
+  //     } else if (data.luyouqi.indexOf(data.num) != -1) {
+  //       //路由器
+  //       data.showPrize = true
+  //       ;(data.prizeImg = require('@/assets/images/option-5/prize-img6.png')),
+  //         (data.prizeName = '恭喜你获得路由器')
+  //     } else if (data.libao.indexOf(data.num) != -1) {
+  //       //礼包
+  //       data.showPrize = true
+  //       ;(data.prizeImg = require('@/assets/images/option-5/prize-img7.png')),
+  //         (data.prizeName = '恭喜你获得终级大礼包')
+  //     } else {
+  //     }
+  //   }, 600)
+  //   if (data.num < 20) {
+  //     $('.pic_pag').remove()
+  //     $('#site_' + data.num).append(the_val)
+  //   } else if (data.num >= 20) {
+  //     $('.pic_pag').remove()
+  //     $('#site_20').append(the_val)
+  //     data.showPrize = true
+  //     ;(data.prizeImg = require('@/assets/images/option-5/prize-img7.png')),
+  //       (data.prizeName = '恭喜你获得终级大礼包')
+  //   } /* else if(data.num>20){
+  // 			data.num =data.num%20;
+  // 			$(".pic_pag").remove();
+  // 			$("#site_"+data.num).append(the_val);
+  // 		}	 */
+  // }, 1000)
 }
 
 //获取短信验证码
 async function get_sms_code() {
-  let currentTime = data.currentTime;
-  if (data.content == "获取验证码") {
-    if (!phoneReg.test(loginData.mobile)) return showToast("请输入有效手机号码");
-    if (!loginData.captchaCode) return showToast("请输入图像验证码");
+  let currentTime = data.currentTime
+  if (data.content == '获取验证码') {
+    if (!phoneReg.test(loginData.mobile)) return showToast('请输入有效手机号码')
+    if (!loginData.captchaCode) return showToast('请输入图像验证码')
 
     const params = {
       mobile: loginData.mobile,
@@ -563,29 +610,28 @@ async function get_sms_code() {
     }
     try {
       await loginStore.fetchSendSms(params)
-    data.content = data.currentTime + '秒'
-    let tt = setInterval(function () {
-      if (currentTime >= 1) {
-        currentTime--;
-        data.content = currentTime + "秒";
-      } else {
-        data.content = "获取验证码";
-        clearInterval(tt);
-      }
-    }, 1000);
-    } catch(err) {
-      console.log(err);
+      data.content = data.currentTime + '秒'
+      let tt = setInterval(function () {
+        if (currentTime >= 1) {
+          currentTime--
+          data.content = currentTime + '秒'
+        } else {
+          data.content = '获取验证码'
+          clearInterval(tt)
+        }
+      }, 1000)
+    } catch (err) {
+      console.log(err)
       showToast(err.msg)
       changeGraphCode()
     }
-
   }
 }
 
 // 登录
 async function handleLoginClick() {
-  if (!phoneReg.test(loginData.mobile)) return showToast("请输入有效手机号码");
-  if (!loginData.smsCode) return showToast("请输入验证码");
+  if (!phoneReg.test(loginData.mobile)) return showToast('请输入有效手机号码')
+  if (!loginData.smsCode) return showToast('请输入验证码')
   const params = {
     mobile: loginData.mobile,
     smsCode: loginData.smsCode,
@@ -598,89 +644,88 @@ async function handleLoginClick() {
 
 //活动规则
 function hdgzBtn() {
-  data.showHdgz = true;
+  data.showHdgz = true
 }
 
 //双11惊喜礼包
 function libaoBtn() {
   mainStore.fetchluck1111()
-  data.showLibao = true;
+  data.showLibao = true
 }
 
 //获取次数
 function taskBtn() {
   mainStore.fetchUserJob()
-  data.showTask = true;
+  data.showTask = true
 }
 
-//签到提示
+// 做任务
 function handletaskClick(id) {
   mainStore.fetchDoJob(id)
   // showSuccessToast("恭喜您，签到成功");
-
 }
 
 //我的奖品
 async function prizeBtn() {
   await mainStore.fetchMyPrize()
-  data.showMyPrize = true;
+  data.showMyPrize = true
 }
 
 //实物登记
 function goodsBtn() {
-  data.showGoods = true;
-  data.showMyPrize = false;
+  data.showGoods = true
+  data.showMyPrize = false
 }
 
 //选择地市
 function selectBtn() {
-  data.showAddress = true;
+  data.showAddress = true
 }
 function onConfirm(selectedValues) {
-  let value = `${selectedValues.selectedOptions[0].text}-${selectedValues.selectedOptions[1].text}-${selectedValues.selectedOptions[2].text}`;
-  console.log(value);
-  data.addressValue = value;
-  data.showAddress = false;
+  let value = `${selectedValues.selectedOptions[0].text}-${selectedValues.selectedOptions[1].text}-${selectedValues.selectedOptions[2].text}`
+  console.log(value)
+  data.addressValue = value
+  data.showAddress = false
 }
 
 //答题
 function askBtn(item, index) {
-  data.currentIndex = index;
-  if (item.state) {
-    showSuccessToast("恭喜回答正确，获得一次投掷次数");
+  data.currentIndex = index
+  if (Number(riddleInfo.value.correctAnswer) === index) {
+    showSuccessToast('恭喜回答正确')
   } else {
-    showFailToast("对不起，回答错误");
+    showFailToast('对不起，回答错误')
   }
 }
 
 //分享答题
 function shareBtn() {
-  data.showShare = true;
-  data.showPrizeAsk = false;
+  data.showShare = true
+  data.showPrizeAsk = false
 }
 
 //分享海报
 function shareHBBtn() {
-  data.showShareHB = true;
-  data.showPrize = false;
+  data.showShareHB = true
+  data.showPrize = false
 }
 
 //关闭
 function closeBtn() {
-  data.showLogin = false;
-  data.showHdgz = false;
-  data.showTask = false;
-  data.showGoods = false;
-  data.showMyPrize = false;
-  data.showLibao = false;
-  data.showPrize = false;
-  data.showPrizeAsk = false;
-  data.showShare = false;
-  data.showShareHB = false;
+  data.showLogin = false
+  data.showHdgz = false
+  data.showTask = false
+  data.showGoods = false
+  data.showMyPrize = false
+  data.showLibao = false
+  data.showPrize = false
+  data.showPrizeAsk = false
+  data.showShare = false
+  data.showShareHB = false
 }
 </script>
 <style scoped>
-@import "@/assets/css/option-5/style.css";
+@import '@/assets/css/option-5/style.css';
 
 .page {
   position: relative;
@@ -824,7 +869,6 @@ function closeBtn() {
   right: 0;
   height: 0.7rem;
   padding: 0 0.2rem;
-
 }
 .fill-term {
   flex: 1;
@@ -862,13 +906,13 @@ function closeBtn() {
   color: #fff;
   font-size: 0.4rem;
   font-weight: 700;
-  background: url("@/assets/images/option-5/popup-btn-img.png") no-repeat;
+  background: url('@/assets/images/option-5/popup-btn-img.png') no-repeat;
   background-size: 100% 100%;
   text-align: center;
 }
 .popup-bottom-btn.share-btn {
   color: #a56800;
-  background: url("@/assets/images/option-5/popup-btn-img2.png") no-repeat;
+  background: url('@/assets/images/option-5/popup-btn-img2.png') no-repeat;
   background-size: 100% 100%;
 }
 .popup-hdgz {
@@ -971,8 +1015,8 @@ function closeBtn() {
 }
 .ewm-img {
   position: absolute;
-  width: 1.7rem;
-  height: 1.7rem;
+  width: 1.7rem !important;
+  height: 1.7rem !important;
   left: 1.15rem;
   bottom: 0.55rem;
 }

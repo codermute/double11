@@ -49,7 +49,7 @@ class Request {
         const loginStore = useLogin()
         this.loading?.close()
         const data = DecryptData(res.data)
-        console.log(data, '+++++');
+        // console.log(data, '+++++');
         // loginStore.getToken()
         if (data?.code === 10125 || data?.code === 40053) {
           setTimeout(() => {

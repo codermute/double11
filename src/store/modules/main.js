@@ -14,6 +14,7 @@ export const useMain = defineStore('main', {
       const res = await changeDraw()
       console.log(res, '抽奖');
       this.fetchCanDrawNum()
+      return res
     },
     async fetchUserJob() {
       const res = await getUserJob()
@@ -23,9 +24,12 @@ export const useMain = defineStore('main', {
     async fetchDoJob(id) {
       const res = await changeDoJob(id)
       console.log(res, '做任务');
-      showToast(res.msg)
+      this.fetchCanDrawNum()
+
       if(res.url) {
         window.location.href = res.url
+      } else {
+        showToast(res.msg)
       }
       this.fetchUserJob()
     },
