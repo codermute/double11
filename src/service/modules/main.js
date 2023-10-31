@@ -6,7 +6,8 @@ import Request from '../request'
  */
 export function changeDraw() {
   return Request.get({
-    url: '/api/dbElvDraw/draw'
+    url: '/api/dbElvDraw/draw',
+    isReject: true
   })
 }
 

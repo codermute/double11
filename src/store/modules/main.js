@@ -11,10 +11,14 @@ export const useMain = defineStore('main', {
   }),
   actions: {
     async fetchDraw() {
-      const res = await changeDraw()
-      console.log(res, '抽奖');
-      this.fetchCanDrawNum()
-      return res
+      try {
+        const res = await changeDraw()
+        console.log(res, '抽奖');
+        this.fetchCanDrawNum()
+        return res
+      } catch (error) {
+        console.log(error);
+      }
     },
     async fetchUserJob() {
       const res = await getUserJob()

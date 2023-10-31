@@ -393,6 +393,7 @@
 import 'vant/es/toast/style'
 import { reactive, ref, onMounted, watch } from 'vue'
 import QrcodeVue from 'qrcode.vue'
+import _ from 'lodash'
 import { showSuccessToast, showFailToast, showToast } from 'vant'
 import { areaList } from '@vant/area-data'
 import { useLogin, useMain } from '@/store'
@@ -535,17 +536,24 @@ function changeGraphCode() {
 
 // 抽奖
 const riddleInfo = ref({})
-async function gameBtn() {
+const gameBtn = _.throttle(async () => {
+  $('.shaizi span').addClass('yao')
+  var the_num = Math.floor(Math.random() * 6 + 1)
+  var the_val = '<em class="pic_pag"><span></span></em>'
   const res = await mainStore.fetchDraw()
 
   console.log('-----', res)
-  if (!res.game) {
+  if (res && !res.game) {
     data.prizeName = `恭喜您获得${res.prize?.prizeName}`
     data.prizeImg = res.prize?.prizeIcon
     data.showPrize = true
-  } else {
+  } else if (res) {
     riddleInfo.value = res.game
     data.showPrizeAsk = true
+  }
+  $('.shaizi span').removeClass('yao')
+  if (the_num != 0) {
+    $('.shaizi span').css('background-position', -2 * (the_num - 1) + 'rem')
   }
 
   // setTimeout(function () {
@@ -614,7 +622,7 @@ async function gameBtn() {
   // 			$("#site_"+data.num).append(the_val);
   // 		}	 */
   // }, 1000)
-}
+}, 200)
 
 //获取短信验证码
 async function get_sms_code() {
@@ -731,8 +739,8 @@ async function shareBtn() {
 
   await nextTick()
   const riddleImgHeight = riddleShareRef.value.offsetHeight
-  const riddleHeight = riddleRef.value.offsetHeight
-  riddleHeight.value = riddleHeight - riddleImgHeight
+  const riddleshareHeight = riddleRef.value.offsetHeight
+  riddleHeight.value = riddleshareHeight - riddleImgHeight
 
   const riddleImgWidth = riddleShareRef.value.offsetWidth
   html2canvas(riddleShareRef.value, {
@@ -742,7 +750,6 @@ async function shareBtn() {
     width: riddleImgWidth
     // height: riddleImgHeight
   }).then((canvas) => {
-    console.log(canvas, '分享答题')
     const datarepURL = canvas.toDataURL('image/png')
     riddleUrl.value = datarepURL
   })
@@ -755,8 +762,8 @@ async function shareHBBtn() {
 
   await nextTick()
   const activeImgHeight = activeShareRef.value.offsetHeight
-  const activeHeight = activeRef.value.offsetHeight
-  activeHeight.value = activeHeight - activeImgHeight
+  const activeshareHeight = activeRef.value.offsetHeight
+  activeHeight.value = activeshareHeight - activeImgHeight
 
   const activeImgWidth = activeShareRef.value.offsetWidth
   html2canvas(activeShareRef.value, {
@@ -766,7 +773,6 @@ async function shareHBBtn() {
     width: activeImgWidth
     // height: activeImgHeight
   }).then((canvas) => {
-    console.log(canvas, '分享海报')
     const datarepURL = canvas.toDataURL('image/png')
     activeUrl.value = datarepURL
   })
@@ -1014,6 +1020,10 @@ function closeBtn() {
 }
 .task-name {
   color: #333;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 340px;
 }
 .task-btn {
   position: absolute;
