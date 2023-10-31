@@ -215,6 +215,8 @@
                 type="text"
                 class="fill-term"
                 placeholder="请输入收件人手机号"
+                maxlength="12"
+                v-model="signData.regMobile"
               />
             </div>
             <div class="fill-row">
@@ -222,6 +224,8 @@
                 type="text"
                 class="fill-term"
                 placeholder="请输入收件人姓名"
+                maxlength="18"
+                v-model="signData.regName"
               />
             </div>
             <div class="fill-row">
@@ -234,7 +238,16 @@
                 readonly
               />
             </div>
-            <a href="#" class="popup-bottom-btn">登记</a>
+            <div class="fill-row">
+              <input
+                type="text"
+                class="fill-term"
+                placeholder="请输入详细地址"
+                maxlength="22"
+                v-model="signData.regAddress"
+              />
+            </div>
+            <a class="popup-bottom-btn" @click="signClick">登记</a>
           </div>
         </div>
         <img
@@ -250,7 +263,6 @@
         title="选择地市"
         :area-list="areaList"
         @confirm="onConfirm"
-        @cancel="onCancel"
       />
     </van-popup>
 
@@ -265,9 +277,9 @@
         <div class="popup-content">
           <img class="gx-img" src="@/assets/images/option-5/gx-img.png" />
           <div class="popup-text text-center">
-            您的在网时长超过1111天，特发放双十一惊喜好礼100元话费抵用券！
+            {{ mainStore.prizeDesc }}
           </div>
-          <a href="#" class="popup-bottom-btn">领取</a>
+          <a @click="data.showLibao = false" class="popup-bottom-btn"> 确定 </a>
         </div>
         <img
           src="@/assets/images/option-5/close-white.png"
@@ -670,14 +682,42 @@ async function handleLoginClick() {
   data.showLogin = false
 }
 
+/* 实物登记 */
+const signData = reactive({
+  regMobile: '',
+  regName: '',
+  regAddress: ''
+})
+async function signClick() {
+  if (!phoneReg.test(signData.regMobile)) return showToast('请输入有效手机号码')
+  if (!signData.regName) return showToast('请输入收货人')
+  if (!data.addressValue) return showToast('请选择所在地区')
+  if (!signData.regAddress) return showToast('请输入详细地址')
+
+  const { regMobile, regName, regAddress } = signData
+  const [regProvince, regCity, regArea] = data.addressValue.split('-')
+  const params = {
+    orderId: '',
+    regMobile,
+    regName,
+    regAddress,
+    regProvince,
+    regCity,
+    regArea
+  }
+  console.log(params)
+  // await mainStore.fetchReceive(params)
+  data.showGoods = false
+}
+
 //活动规则
 function hdgzBtn() {
   data.showHdgz = true
 }
 
 //双11惊喜礼包
-function libaoBtn() {
-  mainStore.fetchluck1111()
+async function libaoBtn() {
+  await mainStore.fetchluck1111()
   data.showLibao = true
 }
 

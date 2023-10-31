@@ -52,12 +52,12 @@ class Request {
         // console.log(data, '+++++');
 
         if (data?.code === 10125 || data?.code === 40053) {
-          // setTimeout(() => {
+          setTimeout(() => {
             sessionCache.deleteCache(TOKEN)
             loginStore.token = ''
             const state = sessionCache.getCache('state')
-            // location.href = `${store.basePath}/campusBlindBoxLottery/index?state=${state}`
-          // }, 100)
+            // location.href = `${baseURL}/dbElvDrawAuth/index?state=${state}`
+          }, 100)
         }
         return data
       },

@@ -1,13 +1,14 @@
 import { defineStore } from "pinia";
 import {showToast} from 'vant'
-import {changeDraw,getUserJob, changeDoJob, changeActivityShare, getMyPrize, getCanDrawNum,changeluck1111} from '@/service'
+import {changeDraw,getUserJob, changeDoJob, changeActivityShare, getMyPrize, getCanDrawNum,changeluck1111, changeReceive} from '@/service'
 
 export const useMain = defineStore('main', {
   state: () => ({
     taskList: [], // 任务列表
     shareUrl: '', // 分享链接
     prizeList: [], // 奖品列表
-    canDrawNum: 0 // 抽奖次数
+    canDrawNum: 0, // 抽奖次数
+    prizeDesc: ''
   }),
   actions: {
     async fetchDraw() {
@@ -55,6 +56,11 @@ export const useMain = defineStore('main', {
     async fetchluck1111() {
       const res = await changeluck1111()
       console.log(res, '111活动');
+      this.prizeDesc = res.prize?.prizeDesc
+      this.canDrawNum = res?.canDrawNum || 0
+    },
+    async fetchReceive(payload) {
+      await changeReceive(payload)
     }
   }
 })

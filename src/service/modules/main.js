@@ -75,5 +75,23 @@ export function getCanDrawNum() {
 export function changeluck1111() {
   return Request.get({
     url: '/api/dbElvDraw/luck1111',
+    showLoading: true
+  })
+}
+
+/**
+ * @description: 实物登记
+ * @param {orderId} 订单号
+ * @param {regProvince} 省
+ * @param {regCity} 市
+ * @param {regArea} 区
+ * @param {regAddress} 详细地址
+ * @param {regName} 收货人
+ * @param {regMobile} 收货号码
+ */
+export function changeReceive(params) {
+  return Request.get({
+    url: '/api/dbElvDraw/inKindReg',
+    params
   })
 }
