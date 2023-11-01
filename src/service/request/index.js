@@ -56,7 +56,7 @@ class Request {
             sessionCache.deleteCache(TOKEN)
             loginStore.token = ''
             const state = sessionCache.getCache('state')
-            // location.href = `${baseURL}/dbElvDrawAuth/index?state=${state}`
+            location.href = `${baseURL}/dbElvDrawAuth/index?state=${state}`
           }, 100)
         }
         return data

@@ -5,7 +5,7 @@ const webpack = require('webpack')
 
 module.exports = {
   publicPath: './',
-  // productionSourceMap: false,
+  productionSourceMap: false,
   transpileDependencies: true,
   devServer: {
     host: '192.168.1.111',
