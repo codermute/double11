@@ -800,7 +800,9 @@ const riddleRef = ref(null)
 //分享答题
 async function shareBtn() {
   data.showShare = true
+  /* 重置脑筋急转弯选项 */
   data.showPrizeAsk = false
+  data.currentIndex = -1
 
   await nextTick()
   const riddleImgHeight = riddleShareRef.value.offsetHeight
@@ -855,6 +857,8 @@ function closeBtn() {
   data.showPrizeAsk = false
   data.showShare = false
   data.showShareHB = false
+
+  data.currentIndex = -1
 }
 </script>
 <style scoped>
