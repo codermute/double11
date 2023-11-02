@@ -570,8 +570,27 @@ const gameBtn = _.throttle(async () => {
   var the_num = Math.floor(Math.random() * 6 + 1)
   var the_val = '<em class="pic_pag"><span></span></em>'
   const res = await mainStore.fetchDraw()
-  data.signState = false
+
   console.log('-----', res)
+  $('.shaizi span').removeClass('yao')
+  if (the_num != 0) {
+    $('.shaizi span').css('background-position', -2 * (the_num - 1) + 'rem')
+  }
+  if (res) {
+    data.signState = false
+
+    data.num += the_num
+    console.log(data.num)
+    if (data.num < 20) {
+      $('.pic_pag').remove()
+      $('#site_' + data.num).append(the_val)
+    } else if (data.num > 20) {
+      data.num = data.num % 20
+      $('.pic_pag').remove()
+      $('#site_' + data.num).append(the_val)
+    }
+  }
+
   if (res && !res.game) {
     data.prizeName = `恭喜您获得${res.prize?.prizeName}`
     data.prizeImg = res.prize?.prizeIcon
@@ -579,20 +598,6 @@ const gameBtn = _.throttle(async () => {
   } else if (res) {
     riddleInfo.value = res.game
     data.showPrizeAsk = true
-  }
-  $('.shaizi span').removeClass('yao')
-  if (the_num != 0) {
-    $('.shaizi span').css('background-position', -2 * (the_num - 1) + 'rem')
-  }
-  data.num += the_num
-  console.log(data.num)
-  if (data.num < 20) {
-    $('.pic_pag').remove()
-    $('#site_' + data.num).append(the_val)
-  } else if (data.num > 20) {
-    data.num = data.num % 20
-    $('.pic_pag').remove()
-    $('#site_' + data.num).append(the_val)
   }
 
   // setTimeout(function () {
