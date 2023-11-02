@@ -196,11 +196,16 @@
               <a :href="item.goUrl" class="task-btn" v-if="item.prizeType === 1"
                 >去领取</a
               >
-              <a
-                class="task-btn"
-                v-if="item.prizeType === 5 || item.prizeType === 6"
-                >已发放</a
-              >
+              <a class="task-btn" v-if="item.prizeType === 6">已发放</a>
+              <a class="task-btn" v-if="item.prizeType === 5">{{
+                item.status == 0
+                  ? '待领取'
+                  : item.status == 1
+                  ? '已领取'
+                  : item.status == 2
+                  ? '领取失败'
+                  : '领取中'
+              }}</a>
             </div>
           </div>
         </div>
@@ -565,7 +570,7 @@ const gameBtn = _.throttle(async () => {
   var the_num = Math.floor(Math.random() * 6 + 1)
   var the_val = '<em class="pic_pag"><span></span></em>'
   const res = await mainStore.fetchDraw()
-
+  data.signState = false
   console.log('-----', res)
   if (res && !res.game) {
     data.prizeName = `恭喜您获得${res.prize?.prizeName}`
@@ -578,6 +583,16 @@ const gameBtn = _.throttle(async () => {
   $('.shaizi span').removeClass('yao')
   if (the_num != 0) {
     $('.shaizi span').css('background-position', -2 * (the_num - 1) + 'rem')
+  }
+  data.num += the_num
+  console.log(data.num)
+  if (data.num < 20) {
+    $('.pic_pag').remove()
+    $('#site_' + data.num).append(the_val)
+  } else if (data.num > 20) {
+    data.num = data.num % 20
+    $('.pic_pag').remove()
+    $('#site_' + data.num).append(the_val)
   }
 
   // setTimeout(function () {
