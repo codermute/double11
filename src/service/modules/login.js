@@ -21,6 +21,7 @@ export function fetchAuthCode(params) {
 export function getCaptcha(key) {
   return Request.get({
     url: '/dbElvDrawAuth/captcha',
+    showLoading: false,
     params: {
       key
     }

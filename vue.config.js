@@ -8,12 +8,9 @@ module.exports = {
   publicPath: './',
   productionSourceMap: false,
   transpileDependencies: true,
-  // devServer: {
-  //   host: '192.168.1.111',
-  //   hot: true,
-  //   port: 3000,
-  //   open: true,
-  // },
+  devServer: {
+    host: '0.0.0.0'
+  },
   lintOnSave: true,
   configureWebpack: {
     plugins: [

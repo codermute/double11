@@ -4,16 +4,17 @@
 
 <script>
 export default {
-  name: "App",
-};
+  name: 'App'
+}
 </script>
 
-<style lang="stylus">
-#app
-	margin: 0 auto
-	width: 100%
-	min-width: 320Px
-	max-width: 750Px
-	min-height: 100vh
-	background-color: #f6f7fb
+<style>
+#app {
+  margin: 0 auto;
+  width: 100%;
+  min-width: 320px;
+  max-width: 750px;
+  min-height: 100vh;
+  background-color: #f6f7fb;
+}
 </style>

@@ -59,6 +59,7 @@ class Request {
             location.href = `${baseURL}/dbElvDrawAuth/index?state=${state}`
           }, 100)
         }
+
         return data
       },
       (err) => {
@@ -86,7 +87,7 @@ class Request {
       }).catch((err) => {
         console.log(err);
         showToast('网络错误,请稍后')
-        // reject(err)
+        reject(err)
       })
     })
   }

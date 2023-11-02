@@ -539,7 +539,7 @@ const riddleUrl = ref('')
 const activeUrl = ref('')
 onMounted(() => {
   if (!loginStore.token) {
-    data.showLogin = true
+    // data.showLogin = true
     changeGraphCode()
   }
 
@@ -703,7 +703,7 @@ async function get_sms_code() {
       }, 1000)
     } catch (err) {
       console.log(err)
-      showToast(err.msg)
+      // showToast(err.msg)
       changeGraphCode()
     }
   }
