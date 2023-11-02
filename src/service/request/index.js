@@ -63,8 +63,7 @@ class Request {
       },
       (err) => {
         this.loading?.close()
-
-        return err
+        return Promise.reject(err)
       }
     )
   }

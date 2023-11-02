@@ -570,16 +570,21 @@ function changeGraphCode() {
 // 抽奖
 const riddleInfo = ref({})
 const gameBtn = _.throttle(async () => {
-  $('.shaizi span').addClass('yao')
   var the_num = Math.floor(Math.random() * 6 + 1)
-  var the_val = '<em class="pic_pag"><span></span></em>'
+  if (mainStore.canDrawNum > 0) {
+    $('.shaizi span').addClass('yao')
+    var the_val = '<em class="pic_pag"><span></span></em>'
+  }
   const res = await mainStore.fetchDraw()
 
   console.log('-----', res)
-  $('.shaizi span').removeClass('yao')
-  if (the_num != 0) {
-    $('.shaizi span').css('background-position', -2 * (the_num - 1) + 'rem')
+  if (mainStore.canDrawNum > 0) {
+    $('.shaizi span').removeClass('yao')
+    if (the_num != 0) {
+      $('.shaizi span').css('background-position', -2 * (the_num - 1) + 'rem')
+    }
   }
+
   if (res) {
     data.signState = false
 
