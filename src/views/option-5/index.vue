@@ -196,7 +196,11 @@
               <a :href="item.goUrl" class="task-btn" v-if="item.prizeType === 1"
                 >去领取</a
               >
-              <a class="task-btn" v-if="item.prizeType === 6">已发放</a>
+              <a
+                class="task-btn"
+                v-if="item.prizeType === 6 || item.prizeType === 2"
+                >已发放</a
+              >
               <a class="task-btn" v-if="item.prizeType === 5">{{
                 item.status == 0
                   ? '待领取'
@@ -888,6 +892,8 @@ function closeBtn() {
   position: relative;
   background: #ffc984;
   line-height: 0.55rem;
+  overflow: hidden;
+  width: 100%;
 }
 .page > .cover {
   position: fixed;
