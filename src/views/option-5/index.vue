@@ -918,7 +918,7 @@ function closeBtn() {
   position: absolute;
   width: 2rem;
   height: 2rem;
-  top: 14.8rem;
+  top: 14.6rem;
   right: 0.1rem;
   z-index: 11;
 }
@@ -957,7 +957,7 @@ function closeBtn() {
   position: absolute;
   width: 1.8rem;
   height: 1.8rem;
-  bottom: 0.3rem;
+  bottom: 0.8rem;
   z-index: 9;
 }
 .cishu-btn {
