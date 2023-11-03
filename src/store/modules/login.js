@@ -13,7 +13,8 @@ export const useLogin = defineStore('login', {
     token: sessionCache.getCache(TOKEN),
     captchaKey: '', // 图形验证码key
     imageCode: '', // 图形验证码
-    prizeData: ''
+    prizeData: '',
+    showKoiPrize: false
   }),
   actions:{
     // getCampusCode() {
@@ -73,6 +74,7 @@ export const useLogin = defineStore('login', {
       const res = await getMate60()
       console.log(res, 'getMate60');
       this.prizeData = res.prize
+      this.showKoiPrize = true
     }
   }
 })

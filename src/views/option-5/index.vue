@@ -220,6 +220,10 @@
                   : '领取中'
               }}</a>
             </div>
+            <div class="empty" v-if="!mainStore.prizeList?.length">
+              <img src="@/assets/images/option-5/empty.png" alt="" />
+              <span>暂未领取奖品，快点参与活动赢取吧～</span>
+            </div>
           </div>
         </div>
         <img
@@ -329,7 +333,9 @@
         </div>
         <div class="popup-content">
           <img class="popup-icon" :src="data.prizeImg" />
-          <div class="popup-text text-center">{{ data.prizeName }}</div>
+          <div class="popup-text text-center prize-neme">
+            {{ data.prizeName }}
+          </div>
           <a @click="data.showPrize = false" class="popup-bottom-btn">确定</a>
           <a class="popup-bottom-btn share-btn" @click="shareHBBtn">分享</a>
         </div>
@@ -424,6 +430,33 @@
         <img
           src="@/assets/images/option-5/close-white.png"
           @click="closeBtn"
+          class="close-btn"
+        />
+      </div>
+    </div>
+
+    <!-- 锦鲤奖品-->
+    <div class="popup" v-show="loginStore.showKoiPrize">
+      <div class="popup-bg"></div>
+      <div class="popup-info">
+        <div class="popup-title">
+          <span>获得奖励</span>
+          <img src="@/assets/images/option-5/title-bg1.png" />
+        </div>
+        <div class="popup-content">
+          <img class="popup-icon" :src="loginStore.prizeData" />
+          <div class="popup-text text-center prize-neme">
+            恭喜您!成为本次活动的"锦鲤"
+          </div>
+          <div class="popup-text text-center">{{ loginStore.prizeData }}</div>
+          <a @click="data.showPrize = false" class="popup-bottom-btn">确定</a>
+          <a class="popup-bottom-btn share-btn" @click="shareHBBtn('koi')"
+            >分享</a
+          >
+        </div>
+        <img
+          src="@/assets/images/option-5/close-white.png"
+          @click="loginStore.showKoiPrize = false"
           class="close-btn"
         />
       </div>
@@ -564,7 +597,7 @@ watch(
   (newToken) => {
     if (newToken) {
       // 获取分享链接
-      mainStore.fetchActivityShare()
+      // mainStore.fetchActivityShare()
       // 获取抽奖次数
       mainStore.fetchCanDrawNum()
     }
@@ -843,6 +876,8 @@ async function shareBtn() {
   data.showPrizeAsk = false
   data.currentIndex = -1
 
+  await mainStore.fetchActivityShare()
+
   await nextTick()
   const riddleImgHeight = riddleShareRef.value.offsetHeight
   const riddleshareHeight = riddleRef.value.offsetHeight
@@ -862,9 +897,14 @@ async function shareBtn() {
 }
 
 //分享海报
-async function shareHBBtn() {
+async function shareHBBtn(type) {
+  if (type === 'koi') {
+    loginStore.showKoiPrize = false
+  }
   data.showShareHB = true
   data.showPrize = false
+
+  await mainStore.fetchActivityShare()
 
   await nextTick()
   const activeImgHeight = activeShareRef.value.offsetHeight
@@ -918,6 +958,18 @@ function closeBtn() {
   bottom: 0;
   z-index: 799;
 }
+.empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px 0;
+  font-size: 28px;
+}
+.empty > img {
+  width: 400px;
+  margin-bottom: 20px;
+}
 .hdgz-btn {
   position: absolute;
   right: 0;
@@ -928,6 +980,10 @@ function closeBtn() {
   text-align: center;
   border-radius: 0.2rem 0 0 0.2rem;
   line-height: 0.4rem;
+}
+.prize-neme {
+  font-size: 28px;
+  color: #af3d2e;
 }
 .libao-btn {
   position: absolute;
