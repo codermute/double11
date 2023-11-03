@@ -2,10 +2,10 @@
   <router-view></router-view>
 </template>
 
-<script>
-export default {
-  name: 'App'
-}
+<script setup>
+// import dayjs from 'dayjs'
+
+// console.log(dayjs().isAfter(dayjs('2023-11-11')))
 </script>
 
 <style>

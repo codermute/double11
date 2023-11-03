@@ -54,3 +54,15 @@ export function changeLogin(params) {
     params
   })
 }
+
+/**
+ * @description: 登录成功调用
+ */
+export function getMate60() {
+  return Request.get({
+    url: '/api/dbElvDraw/mate60',
+    hideToast: false,
+    showLoading: false
+  })
+}
+

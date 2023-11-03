@@ -1,17 +1,19 @@
 import { defineStore } from "pinia";
 import { showLoadingToast, showToast } from 'vant'
 import _ from 'lodash'
+import dayjs from 'dayjs'
 
 import { useMain } from "./main";
 import { AUTHURL, TOKEN } from '@/constant'
 import { sessionCache, getUrlParams } from '@/utils'
-import { fetchAuthCode, getCaptcha, getSendSms, changeLogin } from "@/service";
+import { fetchAuthCode, getCaptcha, getSendSms, changeLogin, getMate60 } from "@/service";
 
 export const useLogin = defineStore('login', {
   state:() => ({
     token: sessionCache.getCache(TOKEN),
     captchaKey: '', // 图形验证码key
-    imageCode: '' // 图形验证码
+    imageCode: '', // 图形验证码
+    prizeData: ''
   }),
   actions:{
     // getCampusCode() {
@@ -34,6 +36,8 @@ export const useLogin = defineStore('login', {
         sessionCache.setCache(TOKEN, res.data)
         this.token = res.data
         mainStore.canDrawNum = res.canDrawNum || 0
+
+        this.fetchMate60()
       } catch (data) {
         console.log(data, '000');
         sessionCache.setCache('openid', data.userInfo?.openid)
@@ -61,6 +65,14 @@ export const useLogin = defineStore('login', {
       this.token = res.data
       mainStore.canDrawNum = res.canDrawNum || 0
       showToast('登录成功')
+      this.fetchMate60()
+    },
+    async fetchMate60() {
+      // console.log(dayjs().isAfter(dayjs('2023-11-11')));
+      if (!dayjs().isAfter(dayjs('2023-11-03'))) return
+      const res = await getMate60()
+      console.log(res, 'getMate60');
+      this.prizeData = res.prize
     }
   }
 })

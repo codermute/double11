@@ -86,7 +86,7 @@ class Request {
         }
       }).catch((err) => {
         console.log(err);
-        showToast('网络错误,请稍后')
+        // showToast('网络错误,请稍后')
         reject(err)
       })
     })
