@@ -111,13 +111,13 @@
         </div>
         <div class="popup-content">
           <div class="popup-hdgz">
-            一、活动时间：即日起至2023.11.30<br />
-            二、活动对象：湖南电信微信公众号用户、客户端用户<br />
+            一、活动时间：即日起至2023年11月30日<br />
+            二、活动对象：湖南电信、湖南移动、湖南联通用户<br />
             三、活动流程：<br />
             &nbsp;&nbsp;&nbsp;&nbsp;每位用户首次进入活动（已登录手机号码）即可获得一次投掷骰子次数，赢取丰厚奖品，还可完成活动指定任务获得额外投掷骰子次数。<br />
             四、奖品说明：<br />
-            1、【华为MATE60 PRO
-            （12GB+512GB）和华为平板MATEPAD-PRO23款】：该奖品需前往活动指定营业厅进行领取并当场激活，才可获得；<br />
+            1、【华为MATE60 PRO （12GB+512GB）和华为平板
+            MATEPAD-PRO23款】：该奖品需前往活动指定营业厅进行领取并当场激活，才可获得；<br />
             2、【微信红包】：该奖品将直接发放至参与活动的微信零钱里面；<br />
             3、【话费】：该奖品将直接充值至参与活动的湖南电信手机号码里；<br />
             4、【流量】：该奖品将直接充值至参与活动的湖南电信手机号码里；<br />
@@ -349,7 +349,11 @@
           <div class="popup-text text-center prize-neme">
             {{ data.prizeName }}
           </div>
-          <a @click="data.showPrize = false" class="popup-bottom-btn">确定</a>
+          <a
+            @click="(data.showPrize = false), prizeBtn()"
+            class="popup-bottom-btn"
+            >确定</a
+          >
           <a class="popup-bottom-btn share-btn" @click="shareHBBtn">分享</a>
         </div>
         <img
@@ -464,7 +468,11 @@
           <div class="popup-text text-center prize-desc">
             {{ loginStore.prizeData?.prizeDesc }}
           </div>
-          <a @click="data.showPrize = false" class="popup-bottom-btn">确定</a>
+          <a
+            @click="(loginStore.showKoiPrize = false), prizeBtn()"
+            class="popup-bottom-btn"
+            >确定</a
+          >
           <a class="popup-bottom-btn share-btn" @click="shareHBBtn('koi')"
             >分享</a
           >
