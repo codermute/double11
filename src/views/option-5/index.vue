@@ -220,7 +220,11 @@
               <a
                 class="task-btn"
                 :href="item.goUrl"
-                v-if="item.prizeType === 6 || item.prizeType === 2"
+                v-if="
+                  item.prizeType === 6 ||
+                  item.prizeType === 2 ||
+                  item.prizeType === 8
+                "
                 >已发放</a
               >
               <a class="task-btn" v-if="item.prizeType === 5">{{
