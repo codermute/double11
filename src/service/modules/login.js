@@ -2,7 +2,7 @@ import Request from '../request'
 
 /**
  * @description: 授权接口
- * @param {code, state}
+ * @param {code, state, ticket}
  * @return {token}
  */
 export function fetchAuthCode(params) {
