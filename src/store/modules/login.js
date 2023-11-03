@@ -31,8 +31,9 @@ export const useLogin = defineStore('login', {
       try {
         const state = getUrlParams('state')
         const code = getUrlParams('code')
+        const ticket = getUrlParams('ticket')
 
-        const res = await fetchAuthCode({code, state})
+        const res = await fetchAuthCode({code, state, ticket })
         console.log(res, '授权');
         sessionCache.setCache(TOKEN, res.data)
         this.token = res.data
