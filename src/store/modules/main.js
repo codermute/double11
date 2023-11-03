@@ -30,15 +30,19 @@ export const useMain = defineStore('main', {
     async fetchDoJob(id) {
       try {
         const res = await changeDoJob(id)
-      console.log(res, '做任务');
-      this.fetchCanDrawNum()
+        console.log(res, '做任务');
 
-      if(res.url) {
-        window.location.href = res.url
-      } else {
-        showToast(res.msg)
-      }
-      this.fetchUserJob()
+        if(res.url) {
+          this.fetchCanDrawNum()
+          this.fetchUserJob()
+          window.location.href = res.url
+        } else {
+          setTimeout(() => {
+            this.fetchCanDrawNum()
+            this.fetchUserJob()
+          }, 700);
+          showToast(res.msg)
+        }
       } catch (err) {
         console.log(err);
         if (err.url) {

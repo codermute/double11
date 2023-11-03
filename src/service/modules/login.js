@@ -61,7 +61,7 @@ export function changeLogin(params) {
 export function getMate60() {
   return Request.get({
     url: '/api/dbElvDraw/mate60',
-    hideToast: false,
+    hideToast: true,
     showLoading: false
   })
 }
