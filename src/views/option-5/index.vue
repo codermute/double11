@@ -198,6 +198,18 @@
               </div>
               <a
                 class="task-btn"
+                v-if="item.prizeType === 3"
+                @click="changePrizT3"
+                >去分享</a
+              >
+              <a
+                class="task-btn"
+                v-if="item.prizeType === 7"
+                @click="changePrizT7"
+                >去分享</a
+              >
+              <a
+                class="task-btn"
                 v-if="item.prizeType === 4"
                 @click="goodsBtn(item)"
                 >去领取</a
@@ -444,11 +456,13 @@
           <img src="@/assets/images/option-5/title-bg1.png" />
         </div>
         <div class="popup-content">
-          <img class="popup-icon" :src="loginStore.prizeData" />
+          <img class="popup-icon" :src="loginStore.prizeData?.prizeIcon" />
           <div class="popup-text text-center prize-neme">
             恭喜您!成为本次活动的"锦鲤"
           </div>
-          <div class="popup-text text-center">{{ loginStore.prizeData }}</div>
+          <div class="popup-text text-center prize-desc">
+            {{ loginStore.prizeData?.prizeDesc }}
+          </div>
           <a @click="data.showPrize = false" class="popup-bottom-btn">确定</a>
           <a class="popup-bottom-btn share-btn" @click="shareHBBtn('koi')"
             >分享</a
@@ -573,7 +587,7 @@ const mainStore = useMain()
 // 获取任务列表
 // mainStore.fetchUserJob()
 const loginStore = useLogin()
-loginStore.fetchMate60()
+// loginStore.fetchMate60()
 
 const riddleShareRef = ref(null)
 const activeShareRef = ref(null)
@@ -869,6 +883,15 @@ const riddleHeight = ref(0)
 const activeRef = ref(null)
 const riddleRef = ref(null)
 
+function changePrizT3() {
+  data.showMyPrize = false
+  shareBtn()
+}
+function changePrizT7() {
+  data.showMyPrize = false
+  shareHBBtn()
+}
+
 //分享答题
 async function shareBtn() {
   data.showShare = true
@@ -983,7 +1006,8 @@ function closeBtn() {
 }
 .prize-neme {
   font-size: 28px;
-  color: #af3d2e;
+  color: #ff4f48;
+  font-weight: 700;
 }
 .libao-btn {
   position: absolute;
@@ -1070,6 +1094,11 @@ function closeBtn() {
 .popup-info2 .popup-title {
   margin: 0 auto -0.7rem;
   width: 60%;
+}
+.prize-desc {
+  width: 220px;
+  text-align: center;
+  margin: auto;
 }
 
 /* 登录 */
