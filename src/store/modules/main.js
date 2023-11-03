@@ -40,7 +40,7 @@ export const useMain = defineStore('main', {
           setTimeout(() => {
             this.fetchCanDrawNum()
             this.fetchUserJob()
-          }, 700);
+          }, 1100);
           showToast(res.msg)
         }
       } catch (err) {

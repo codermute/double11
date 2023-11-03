@@ -219,18 +219,24 @@
               >
               <a
                 class="task-btn"
+                :href="item.goUrl"
                 v-if="item.prizeType === 6 || item.prizeType === 2"
                 >已发放</a
               >
-              <a class="task-btn" v-if="item.prizeType === 5">{{
-                item.status == 0
-                  ? '待领取'
-                  : item.status == 1
-                  ? '已领取'
-                  : item.status == 2
-                  ? '领取失败'
-                  : '领取中'
-              }}</a>
+              <a
+                class="task-btn"
+                :href="item.goUrl"
+                v-if="item.prizeType === 5"
+                >{{
+                  item.status == 0
+                    ? '待领取'
+                    : item.status == 1
+                    ? '已领取'
+                    : item.status == 2
+                    ? '领取失败'
+                    : '领取中'
+                }}</a
+              >
             </div>
             <div class="empty" v-if="!mainStore.prizeList?.length">
               <img src="@/assets/images/option-5/empty.png" alt="" />
