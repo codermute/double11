@@ -4,7 +4,7 @@ import { showLoadingToast, showToast } from 'vant'
 import { TOKEN } from '@/constant'
 import { useLogin } from '@/store'
 import { baseURL, TIMEOUT, DEAFULT_LOADING } from './config'
-import { sessionCache, DecryptData, getSm2Encrypt } from '@/utils'
+import { sessionCache, DecryptData, getSm2Encrypt, getUrlParams } from '@/utils'
 
 class Request {
   constructor(baseURL) {
@@ -55,7 +55,7 @@ class Request {
           setTimeout(() => {
             sessionCache.deleteCache(TOKEN)
             loginStore.token = ''
-            const state = sessionCache.getCache('state')
+            const state = getUrlParams('state') || sessionCache.getCache('state') || 0
             location.href = `${baseURL}/dbElvDrawAuth/index?state=${state}`
           }, 100)
         }

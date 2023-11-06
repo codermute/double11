@@ -12,6 +12,11 @@ const routes = [
 	  name: 'ttqGame',			// 登录
 	  component: () => import('@/views/option-5/index'),
 	},
+	{
+	  path: '/abnormal',
+	  name: 'abnormal',
+	  component: () => import('@/views/option-5/abnormal'),
+	},
 ]
 
 const router = createRouter({

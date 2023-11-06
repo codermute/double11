@@ -71,11 +71,11 @@ export const useLogin = defineStore('login', {
     },
     async fetchMate60() {
       // console.log(dayjs().isAfter(dayjs('2023-11-11')));
-      if (!dayjs().isAfter(dayjs('2023-11-03'))) return
-      const res = await getMate60()
-      console.log(res, 'getMate60');
-      this.prizeData = res.prize
-      this.showKoiPrize = true
+      // if (!dayjs().isAfter(dayjs('2023-11-03'))) return
+      // const res = await getMate60()
+      // console.log(res, 'getMate60');
+      // this.prizeData = res.prize
+      // this.showKoiPrize = true
     }
   }
 })
