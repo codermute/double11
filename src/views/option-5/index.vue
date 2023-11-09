@@ -5,6 +5,26 @@
       @click="data.showLogin = true"
       class="cover"
     ></div>
+    <!-- 获奖结果滚动 -->
+    <div class="notice-box">
+      <van-notice-bar
+        :scrollable="false"
+        color="#fff"
+        background="rgba(0,0,0,.5)"
+      >
+        <van-swipe
+          vertical
+          class="notice-swipe"
+          :autoplay="3000"
+          :touchable="false"
+          :show-indicators="false"
+        >
+          <van-swipe-item v-for="(item, index) in data.phoneList" :key="index"
+            >恭喜 {{ item.name }} 获得 {{ item.prize }}</van-swipe-item
+          >
+        </van-swipe>
+      </van-notice-bar>
+    </div>
     <div class="hdgz-btn" @click="hdgzBtn">活<br />动<br />规<br />则</div>
     <div class="libao-btn" @click="libaoBtn">
       <img src="@/assets/images/option-5/lb-img.png" />
@@ -586,6 +606,33 @@ const data = reactive({
       id: 0,
       text: 'C.麋鹿',
       state: true
+    }
+  ],
+  phoneList: [
+    {
+      id: 0,
+      name: '199****9889',
+      prize: '大礼包'
+    },
+    {
+      id: 0,
+      name: '191****6367',
+      prize: '大礼包'
+    },
+    {
+      id: 0,
+      name: '199****5329',
+      prize: '大礼包'
+    },
+    {
+      id: 0,
+      name: '196****2380',
+      prize: '大礼包'
+    },
+    {
+      id: 0,
+      name: '193****3813',
+      prize: '翼豆'
     }
   ]
 })
@@ -1319,5 +1366,23 @@ function closeBtn() {
   bottom: 0;
   top: 0;
   z-index: 99;
+}
+/* 获奖结果滚动 */
+.notice-box {
+  position: absolute;
+  left: 0.1rem;
+  top: 4.7rem;
+  width: 5rem;
+  z-index: 9;
+}
+.van-notice-bar {
+  border-radius: 0.5rem;
+  height: 0.7rem;
+  font-size: 0.28rem;
+  padding: 0 0.3rem;
+}
+.notice-swipe {
+  height: 0.7rem;
+  line-height: 0.7rem;
 }
 </style>
