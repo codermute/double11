@@ -70,12 +70,12 @@ export const useLogin = defineStore('login', {
       this.fetchMate60()
     },
     async fetchMate60() {
-      // console.log(dayjs().isAfter(dayjs('2023-11-11')));
-      // if (!dayjs().isAfter(dayjs('2023-11-03'))) return
-      // const res = await getMate60()
-      // console.log(res, 'getMate60');
-      // this.prizeData = res.prize
-      // this.showKoiPrize = true
+      console.log(dayjs().isSame(dayjs('2023-11-11'), 'day'));
+      if (!dayjs().isSame(dayjs('2023-11-09'), 'day')) return
+      const res = await getMate60()
+      console.log(res, 'getMate60');
+      this.prizeData = res.prize
+      this.showKoiPrize = true
     }
   }
 })
