@@ -37,7 +37,7 @@
         />
       </div>
     </div>
-    <img src="@/assets/images/option-5/bg.jpg" />
+    <img src="@/assets/images/option-5/bg.jpg" class="bg-co" />
 
     <!-- 登录弹窗 -->
     <div class="popup" v-show="data.showLogin">
@@ -500,7 +500,7 @@ import { showSuccessToast, showFailToast, showToast } from 'vant'
 import { areaList } from '@vant/area-data'
 import { useLogin, useMain } from '@/store'
 import { phoneReg } from '@/assets/data/regular'
-import { sessionCache } from '@/utils'
+import { sessionCache, getUrlParams } from '@/utils'
 import html2canvas from 'html2canvas'
 import { nextTick } from 'vue'
 
@@ -786,6 +786,7 @@ async function handleLoginClick() {
   const params = {
     mobile: loginData.mobile,
     smsCode: loginData.smsCode,
+    // state: getUrlParams('state') || sessionCache.getCache('state') || 2,
     state: sessionCache.getCache('state'),
     openid: sessionCache.getCache('openid')
   }
@@ -1005,6 +1006,10 @@ function closeBtn() {
 .empty > img {
   width: 400px;
   margin-bottom: 20px;
+}
+
+.bg-co {
+  width: 100%;
 }
 .hdgz-btn {
   position: absolute;
