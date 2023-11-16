@@ -70,8 +70,8 @@ export const useLogin = defineStore('login', {
       this.fetchMate60()
     },
     async fetchMate60() {
-      console.log(dayjs().isSame(dayjs('2023-11-11'), 'day'));
-      if (!dayjs().isSame(dayjs('2023-11-11'), 'day')) return
+      console.log(dayjs().isSame(dayjs('2023-11-24'), 'day'));
+      if (!dayjs().isSame(dayjs('2023-11-24'), 'day')) return
       const res = await getMate60()
       console.log(res, 'getMate60');
       this.prizeData = res.prize

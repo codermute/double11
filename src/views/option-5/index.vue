@@ -622,7 +622,7 @@ const data = reactive({
     {
       id: 0,
       name: '199****5329',
-      prize: '1元话费'
+      prize: '100元红包'
     },
     {
       id: 0,
@@ -658,6 +658,11 @@ const data = reactive({
       id: 0,
       name: '191****1171',
       prize: '1元话费'
+    },
+    {
+      id: 0,
+      name: '199****2234',
+      prize: '蓝牙耳机'
     }
   ]
 })
